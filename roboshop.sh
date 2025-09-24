@@ -2,6 +2,8 @@
 
 AMI_ID="ami-09c813fb71547fc4f"
 SG_ID="sg-043a4d7e2b43cb151"
+ZONE_ID="Z0721267UNC5GRHVALUX"
+DOMAIN_NAME="devraxtech.fun"
 
 for instance in $@
 do
@@ -13,21 +15,24 @@ do
         IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text)
     else
         IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
+        RECORD_NAME="$instance.$DOMAIN_NAME"
     fi
 
     echo "$instance: $IP"
-done
+
 
 aws route53 change-resource-record-sets \
-  --hosted-zone-id Z0721267UNC5GRHVALUX \
+  --hosted-zone-id $ZONE_ID \
   --change-batch '{
     "Changes":[{
       "Action":"UPSERT",
       "ResourceRecordSet":{
-        "Name":"devraxtech.fun",
+        "Name":"'$RECORD_NAME'",
         "Type":"A",
-        "TTL":300,
-        "ResourceRecords":[{"Value":"$instance"}]
+        "TTL":1,
+        "ResourceRecords":[{"Value":"$IP"}]
       }
     }]
   }'
+
+done
