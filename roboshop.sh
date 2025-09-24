@@ -19,7 +19,7 @@ do
 done
 
 aws route53 change-resource-record-sets \
-  --hosted-zone-id $AMI_ID \
+  --hosted-zone-id Z0721267UNC5GRHVALUX \
   --change-batch '{
     "Changes":[{
       "Action":"UPSERT",
