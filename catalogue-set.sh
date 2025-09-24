@@ -26,12 +26,13 @@ if [ $uid -ne 0 ]; then
     exit 1
 fi
 
-
+##Installing NodeJS v20##
 dnf module disable nodejs -y &>>$LOG_FILE
 
 dnf module enable nodejs:20 -y &>>$LOG_FILE
 
 dnf install nodejs -y &>>$LOG_FILE
+echo -e "Installation of NodeJS v20 $G SUCCESSFUL $N"
 
 id roboshop &>>$LOG_FILE
     if [ $? -ne 0 ]; then
