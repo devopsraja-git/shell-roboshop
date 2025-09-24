@@ -36,8 +36,10 @@ dnf install mongodb-org -y &>>$LOG_FILE
 validate $? "Installing mongodb"
 
 systemctl enable mongod &>>$LOG_FILE
-validate $? "mongodb enabled"
+validate $? "Enable MongoDB"
 
 systemctl start mongod
-validate $? "MongoDB Started.."
+validate $? "Starting.. MongoDB"
 
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
+validate $? "Update mongodb IP address"
