@@ -81,5 +81,5 @@ validate $? "Creating mongo repo"
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 validate $? "Installing mongodb client.."
 
-mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
+mongosh --host $MONGODB_HOST < /app/db/master-data.js &>>$LOG_FILE
 validate $? "Loading mongodb data ..."
