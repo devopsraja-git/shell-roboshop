@@ -73,3 +73,5 @@ INDEX=$(mongosh mongodb.devraxtech.fun --quiet --eval "db.getMongo().getDBNames(
     fi
 
 systemctl restart catalogue
+
+echo "Script completed execution at $(date)"
