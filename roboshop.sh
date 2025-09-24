@@ -17,3 +17,17 @@ do
 
     echo "$instance: $IP"
 done
+
+aws route53 change-resource-record-sets \
+  --hosted-zone-id $AMI_ID \
+  --change-batch '{
+    "Changes":[{
+      "Action":"UPSERT",
+      "ResourceRecordSet":{
+        "Name":"devraxtech.fun",
+        "Type":"A",
+        "TTL":300,
+        "ResourceRecords":[{"Value":"$instance"}]
+      }
+    }]
+  }'
