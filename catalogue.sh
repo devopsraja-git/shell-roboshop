@@ -34,10 +34,10 @@ fi
 dnf module disable nodejs -y &>>$LOG_FILE
 validate $? "nodejs disabled"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$LOG_FILE
 validate $? "Enabled nodejs 20v"
 
-dnf install nodejs -y
+dnf install nodejs -y &>>$LOG_FILE
 validate $? "Installing nodejs.."
 
 id roboshop
@@ -51,24 +51,22 @@ id roboshop
 mkdir -p /app
 validate $? "Creating app directory.."
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip  &>>$LOG_FILE
 validate $? "Downloading catalogue application.."
 cd /app 
-validate $? "Changing to app directory.."
-rm -rf /app/*
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>>$LOG_FILE
 validate $? "Unzipping/Extracting the app code.."
 
 
-npm install 
+npm install &>>$LOG_FILE
 validate $? "Installing dependencies.."
 
 cp catalogue.service /etc/systemd/system/catalogue.service
 validate $? "Copying catalogue services.."
 
-systemctl daemon-reload
+systemctl daemon-reload &>>$LOG_FILE
 
-systemctl enable catalogue 
+systemctl enable catalogue &>>$LOG_FILE
 validate $? "Enabling Catalogue service.."
 systemctl start catalogue
 validate $? "Starting Catalogue service.."
@@ -76,8 +74,8 @@ validate $? "Starting Catalogue service.."
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 validate $? "Creating mongo repo"
 
-dnf install mongodb-mongosh -y
+dnf install mongodb-mongosh -y &>>$LOG_FILE
 validate $? "Installing mongodb client.."
 
-mongosh --host $MONGODB_HOST </app/db/master-data.js
+mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
 validate $? "Loading mongodb data ..."
