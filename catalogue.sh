@@ -10,6 +10,7 @@ uid=$(id -u)
 
 LOGS_FOLDER="/var/log/shell-roboshop"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
+SCRIPT_DIR=$PWD
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 MONGODB_HOST=mongodb.devraxtech.fun
 
@@ -64,7 +65,7 @@ validate $? "Unzipping/Extracting the app code.."
 npm install &>>$LOG_FILE
 validate $? "Installing dependencies.."
 
-cp catalogue.service /etc/systemd/system/catalogue.service
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
 validate $? "Copying catalogue services.."
 
 systemctl daemon-reload &>>$LOG_FILE
