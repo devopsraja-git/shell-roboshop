@@ -13,9 +13,10 @@ do
 
     if [ $instance != frontend ]; then
         IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text)
+        RECORD_NAME="$instance.$DOMAIN_NAME"
     else
         IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
-        RECORD_NAME="$instance.$DOMAIN_NAME"
+        RECORD_NAME="$DOMAIN_NAME"
     fi
 
     echo "$instance: $IP"
@@ -30,7 +31,7 @@ aws route53 change-resource-record-sets \
         "Name":"'$RECORD_NAME'",
         "Type":"A",
         "TTL":1,
-        "ResourceRecords":[{"Value":"$IP"}]
+        "ResourceRecords":[{"Value":"'$IP'"}]
       }
     }]
   }'
