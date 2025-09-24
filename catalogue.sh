@@ -88,6 +88,7 @@ INDEX=$(mongosh mongodb.devraxtech.fun --quiet --eval "db.getMongo().getDBNames(
         validate $? "Loading mongodb data ..."
     else
         echo -e "Catalogue products already loaded...$Y SKIPPING... $N"
+    fi
 
 systemctl restart catalogue
 validate $? "Restarting catalogue service.."
