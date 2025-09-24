@@ -23,10 +23,10 @@ fi
 
 validate(){
     if [ $1 -ne 0 ]; then
-    echo -e "$2 is $R FAILED $N"
+    echo -e "$2 $R FAILED $N"
     exit 1
 else
-    echo -e "$2 is $G SUCCESSFUL $N"
+    echo -e "$2 $G SUCCESSFUL $N"
 fi
 }
 
@@ -41,7 +41,7 @@ dnf install nodejs -y &>>$LOG_FILE
 validate $? "Installing nodejs.."
 
 id roboshop
-    if ( $? -ne 0 ); then
+    if [ $? != 0]; then
         useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
         validate $? "User roboshop created"
     else
@@ -54,6 +54,7 @@ validate $? "Creating app directory.."
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip  &>>$LOG_FILE
 validate $? "Downloading catalogue application.."
 cd /app 
+validate $? "Changing to app directory.."
 unzip /tmp/catalogue.zip &>>$LOG_FILE
 validate $? "Unzipping/Extracting the app code.."
 
