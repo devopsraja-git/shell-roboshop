@@ -13,6 +13,7 @@ SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 SCRIPT_DIR=$PWD
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 MONGODB_HOST=mongodb.devraxtech.fun
+START_TIME=$(date +%s)
 
 mkdir -p $LOGS_FOLDER
 echo "Script started executed at $(date)"
@@ -47,3 +48,7 @@ systemctl enable redis &>>$LOG_FILE
 validate $? "Enabling redis service.."
 systemctl start redis 
 validate $? "Starting redis service.."
+
+END_TIME=$(date +%s)
+TOTAL_TIME=$(( $END_TIME - $START_TIME ))
+echo -e "Script executed in: $Y $TOTAL_TIME Seconds $N"

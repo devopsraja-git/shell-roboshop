@@ -85,4 +85,8 @@ mysql -h $MYSQL_HOST -uroot -pRoboShop@1 -e 'use cities' &>>$LOG_FILE
     fi
 
 systemctl restart shipping
-validate $? "Installing redis.."
+validate $? "Restarting shipping services.."
+
+END_TIME=$(date +%s)
+TOTAL_TIME=$(( $END_TIME - $START_TIME ))
+echo -e "Script executed in: $Y $TOTAL_TIME Seconds $N"
