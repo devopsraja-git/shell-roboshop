@@ -74,8 +74,8 @@ cp $SCRIPT_DIR/cart.service /etc/systemd/system/cart.service
 
 systemctl daemon-reload &>>$LOG_FILE
 validate $? "Reloading system daemon.."
-systemctl enable user &>>$LOG_FILE
+systemctl enable cart &>>$LOG_FILE
 validate $? "Enabling cart services.."
-systemctl start user
+systemctl start cart
 validate $? "Starting cart services.."
 
