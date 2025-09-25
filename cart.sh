@@ -49,7 +49,7 @@ id roboshop &>>$LOG_FILE
         echo -e "User roboshop already existing... $Y SKIPPING $N"
     fi
 
-mkdir -P /app 
+mkdir -p /app 
 validate $? "Creating user directory.."
 
 
