@@ -12,7 +12,7 @@ LOGS_FOLDER="/var/log/shell-roboshop"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 SCRIPT_DIR=$PWD
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
-START_TIME=$(date +%s)
+START_TIME=$(date +%S)
 MYSQL_HOST=mysql.devraxtech.fun
 
 
@@ -87,6 +87,6 @@ mysql -h $MYSQL_HOST -uroot -pRoboShop@1 -e 'use cities' &>>$LOG_FILE
 systemctl restart shipping
 validate $? "Restarting shipping services.."
 
-END_TIME=$(date +%s)
+END_TIME=$(date +%S)
 TOTAL_TIME=$(( $END_TIME - $START_TIME ))
 echo -e "Script executed in: $Y $TOTAL_TIME Seconds $N"

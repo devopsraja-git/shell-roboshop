@@ -12,7 +12,7 @@ LOGS_FOLDER="/var/log/shell-roboshop"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 SCRIPT_DIR=$PWD
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
-START_TIME=$(date +%s)
+START_TIME=$(date +%S)
 
 
 mkdir -p $LOGS_FOLDER
@@ -43,6 +43,6 @@ validate $? "Start mysql service.."
 mysql_secure_installation --set-root-pass RoboShop@1 &>>$LOG_FILE
 validate $? "Setting up Root password"
 
-END_TIME=$(date +%s)
+END_TIME=$(date +%S)
 TOTAL_TIME=$(( $END_TIME - $START_TIME ))
 echo -e "Script executed in: $Y $TOTAL_TIME seconds $N"

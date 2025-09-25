@@ -12,6 +12,7 @@ LOGS_FOLDER="/var/log/shell-roboshop"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 SCRIPT_DIR=$PWD
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
+START_TIME=$(date +%S)
 
 
 mkdir -p $LOGS_FOLDER
@@ -78,4 +79,8 @@ systemctl enable cart &>>$LOG_FILE
 validate $? "Enabling cart services.."
 systemctl start cart
 validate $? "Starting cart services.."
+
+END_TIME=$(date +%S)
+TOTAL_TIME=$(( $END_TIME - $START_TIME ))
+echo -e "Script executed in: $Y $TOTAL_TIME Seconds $N"
 
