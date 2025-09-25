@@ -32,15 +32,15 @@ else
 fi
 }
 
-dnf install mysql-server -y
+dnf install mysql-server -y &>>$LOG_FILE
 validate $? "Installing mysql server.."
 
-systemctl enable mysqld
+systemctl enable mysqld &>>$LOG_FILE
 validate $? "Enable mysql service.."
-systemctl start mysqld  
+systemctl start mysqld  &>>$LOG_FILE
 validate $? "Start mysql service.."
 
-mysql_secure_installation --set-root-pass RoboShop@1
+mysql_secure_installation --set-root-pass RoboShop@1 &>>$LOG_FILE
 validate $? "Setting up Root password"
 
 END_TIME=$(date +%s)
